@@ -2,6 +2,7 @@
 using System.Linq;
 using AutoFixture;
 using BenchmarkDotNet.Attributes;
+using Benchmark_Serializer.Model;
 
 namespace Benchmark_Serializer
 {
