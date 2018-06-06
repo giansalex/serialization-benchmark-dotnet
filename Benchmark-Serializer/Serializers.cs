@@ -1,19 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using AutoFixture;
+using BenchmarkDotNet.Attributes;
 
 namespace Benchmark_Serializer
 {
     public class Serializers
     {
         private const int Max = 100;
+        private List<Book> _books;
 
         public Serializers()
         {
-            
+            _books = GetList().ToList();
         }
 
         public IEnumerable<Book> GetList()
@@ -22,8 +21,18 @@ namespace Benchmark_Serializer
 
             foreach (var _ in Enumerable.Range(1, Max))
             {
+                
                 yield return fixture.Create<Book>();
             }
         }
+
+        [Benchmark]
+        public string NewtonJson() => Newtonsoft.Json.JsonConvert.SerializeObject(_books);
+
+        [Benchmark]
+        public string ServiceStackJson() => ServiceStack.Text.JsonSerializer.SerializeToString(_books);
+        
+        [Benchmark]
+        public string JilJson() => Jil.JSON.Serialize(_books);
     }
 }
