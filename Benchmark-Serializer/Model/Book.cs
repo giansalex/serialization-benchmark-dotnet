@@ -1,7 +1,9 @@
 ﻿using System;
+using ProtoBuf;
 
 namespace Benchmark_Serializer.Model
 {
+    [ProtoContract]
     public class Book
     {
         public int Id { get; set; }
